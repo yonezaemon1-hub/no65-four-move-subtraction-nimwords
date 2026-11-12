@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Please cite this unrefereed mathematical preprint; novelty remains inconclusive. All rights reserved."
+type: article
+title: "Exact Nim-Words and Sharp Preperiods in an Infinite Two-Parameter Four-Move Subtraction Family"
+authors:
+  - family-names: Yonezu
+    given-names: Ryutaro
+    affiliation: Independent Researcher
+version: "1.0"
+date-released: "2026-11-12"
+keywords:
+  - subtraction games
+  - Sprague-Grundy sequence
+  - nim-word
+  - preperiod
+  - SMT verification
+abstract: "Complete nim-words for odd a>=3 and odd c>=(a-1)(2a+1)+1, including three-phase boundary corrections and least preperiod c+2a^2-4a-1, least eventual period 2. Independent AI-assisted and SMT verification within the documented scope; author-run Windows reproduction; not peer-reviewed; REFERENCES PARTIAL; NOVELTY INCONCLUSIVE."

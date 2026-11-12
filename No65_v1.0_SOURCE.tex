@@ -1,0 +1,254 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{enumitem}
+\hypersetup{pdftitle={Exact Nim-Words and Sharp Preperiods in an Infinite Two-Parameter Four-Move Subtraction Family},pdfauthor={Ryutaro Yonezu},pdfsubject={Research No.65, preprint v1.0; not peer-reviewed; NOVELTY INCONCLUSIVE; REFERENCES PARTIAL; All rights reserved}}
+\newcommand{\mex}{\operatorname{mex}}
+\newcommand{\E}{\mathcal E}
+\newcommand{\p}{\pi}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\title{Exact Nim-Words and Sharp Preperiods in an Infinite Two-Parameter Four-Move Subtraction Family}
+\author{Ryutaro Yonezu\\\small Independent Researcher}
+\date{12 November 2026 --- preprint v1.0\\\small Research No.65; not peer-reviewed}
+\begin{document}
+\maketitle
+\begin{abstract}
+For every odd $a\ge3$ and odd $c\ge(a-1)(2a+1)+1$, we give the complete Sprague--Grundy word for the normal-play subtraction set $\{a,2a+1,3a,c\}$. Put $L=(a-1)(2a+1)$. A known three-move prefix is followed by a parity word with explicitly located nonbinary exceptions. For $c\ge L+3a$ the exceptions have values 2 and 3. In the additional band $L+1\le c\le L+3a$, a three-phase rule modifies one finite, nonbranching chain; its middle phase includes a genuine value 4. Throughout the stated range, the least preperiod is $c+L-3a=c+2a^2-4a-1$ and the least eventual period is 2. The argument combines explicit algebraic propagation with reproducible universal mex certificates. The three-move base and earlier bounded period-two observations are prior work. No optimality of the lower cutoff in $c$, nor historical priority, is asserted.
+\end{abstract}
+\noindent\textbf{Verification and rights.} Independent AI-assisted and SMT verification within the documented scope. Windows PowerShell 5.1 reproduction PASS (author-run). \textbf{NOVELTY INCONCLUSIVE; REFERENCES PARTIAL; Not peer-reviewed; All rights reserved.}
+
+\smallskip
+\noindent This is an unrefereed mathematical preprint. Independent AI-assisted examination and SMT-based checks have been performed within the documented scope, with author-run Windows reproduction. The SMT conclusion is conditional on the faithfulness of the encoding and solver correctness. No human peer review or full formal proof in a proof assistant has been completed. Novelty is inconclusive; references are partially verified. Copyright (c) 2026 Ryutaro Yonezu. All rights reserved.
+
+\section{Definitions and complete-word theorem}
+All indices start at zero. For a finite set of positive moves $S$, define
+\begin{equation}\label{mex}
+ G_S(n)=\mex\{G_S(n-s):s\in S,\ s\le n\},\qquad \mex\varnothing=0.
+\end{equation}
+An eventual period $p\ge1$ starts at $\ell\ge0$ if $G_S(n+p)=G_S(n)$ for every $n\ge\ell$. We determine both the least eventual period and the earliest possible onset of any eventual periodicity. Write $\p(n)=n\bmod2\in\{0,1\}$, also for negative integers. Fix
+\begin{equation}\label{params}
+ a=2k+1\ge3,\qquad d=4a+2,\qquad L=kd=(a-1)(2a+1),\qquad c_0=L+3a.
+\end{equation}
+The known base word $h$ for $\{a,2a+1,3a\}$ is specified as follows. If $n\ge L$, let $h(n)=\p(n)$. If $0\le n<L$, write $n=id+t$, $0\le i<k$, $0\le t<d$, and $u=a-2i$. Set
+\begin{equation}\label{h}
+ h(n)=\begin{cases}
+ 0&0\le t<u,\\
+ 1&a\le t<a+u,\\
+ 2&2a+1\le t<2a+u,\\
+ 3&3a+1\le t<3a+u,\\
+ 2&t=d-1,\\
+ \p(n)&\text{otherwise}.
+ \end{cases}
+\end{equation}
+These intervals are disjoint. Define
+\begin{align}\label{Esets}
+ U(i,q)&=id+1+2q,& V(i,q)&=id+a+1+2q,\\
+ \E_2&=\{U(i,q):0\le i<k,\ 0\le q<k-i\},&
+ \E_3&=\{V(i,q):0\le i<k,\ 0\le q<k-i\}.\notag
+\end{align}
+Thus $\E_2$ is odd, $\E_3$ is even, and each has $k(k+1)/2$ elements. For odd $c\ge L+1$, the uncorrected expression $W$ is
+\begin{equation}\label{W}
+ W(a,c;n)=\begin{cases}
+ h(n)&n<c,\\
+ 2&n=c+j,\ j\in\E_2,\\
+ 3&n=c+j,\ j\in\E_3,\\
+ \p(n)&n=c+j,\ j\ge0,\ j\notin\E_2\cup\E_3.
+ \end{cases}
+\end{equation}
+
+\begin{theorem}[Complete word on the full stated range]\label{main}
+Let $a\ge3$ and $c\ge L+1$ be odd, and $S=\{a,2a+1,3a,c\}$.
+For $c\ge c_0$, one has $G_S(n)=W(a,c;n)$ for all $n\ge0$.
+For $L+1\le c\le c_0$, put $m=(c_0-c)/2$ and choose $r$ and a seed value $\sigma$ by
+\begin{equation}\label{phases}
+\begin{array}{c|c|c}
+ m& r&\sigma\\\hline
+ 0\le m\le k&m&3\\
+ k+1\le m\le2k&m-k&4\\
+ 2k+1\le m\le3k+1&m-(2k+1)&3
+\end{array}
+\end{equation}
+When $r=0$ the seed is unused. If $0\le i<r$, let
+\begin{equation}\label{chainoffsets}
+ u_i=4ai+2r-1=U(i,r-i-1),\qquad v_i=u_i+a=V(i,r-i-1).
+\end{equation}
+The word equals $W$ except for precisely the following $2r$ substitutions:
+\begin{equation}\label{correction}
+ G_S(c+u_0)=\sigma\quad(r\ge1),\qquad
+ G_S(c+u_i)=3\quad(1\le i<r),\qquad
+ G_S(c+v_i)=2\quad(0\le i<r).
+\end{equation}
+For every parameter pair in the theorem,
+\begin{equation}\label{minimal}
+ \ell_{\min}=c+L-3a=c+2a^2-4a-1,\qquad p_{\min}=2.
+\end{equation}
+\end{theorem}
+The two word descriptions agree at $c=c_0$, where $m=r=0$. The entire word, including its prefix, is specified; this is more than a winning-position description. The lower bound $L+1$ is sufficient, and is not claimed globally optimal. We make no general claim below it. For example, $a=3,c=13$ has period 16, as also recorded in No.63. At $a=7,c=103$ the middle phase gives $G_S(104)=4$, whereas $W$ gives 2.
+
+\section{Base word and its universal certificates}
+\begin{lemma}[Known three-move word, with explicit certificate]\label{base}
+Formula~\eqref{h} satisfies~\eqref{mex} for the three moves $a,2a+1,3a$, for every odd $a\ge3$. Moreover, for $j\ge0$,
+\begin{equation}\label{binary}
+ [j\text{ odd and }h(j)=0]\ \Longleftrightarrow\ j\in\E_2,\qquad
+ [j\text{ even and }h(j)=1]\ \Longleftrightarrow\ j\in\E_3.
+\end{equation}
+\end{lemma}
+\begin{proof}
+We use the supplied universal mex certificate and strong induction on $n$, rather than infer an infinite statement from a finite numerical sweep. In \texttt{LEMMA2\_UNIVERSAL\_MEX.smt2}, arbitrary integers $k\ge1$, $i\ge0$, $0\le t<d$ represent every position $n=id+t$. Its function \texttt{h} is exactly~\eqref{h}, including the alternating tail for $i\ge k$. Each small move $s$ satisfies $s<d$. Its predecessor is therefore represented by $(i,t-s)$ if $t\ge s$, and by $(i-1,t-s+d)$ otherwise. The latter is legal exactly when $i>0$; in the first block, moves with $t<s$ are omitted. These are precisely all legal predecessors.
+
+For candidate value $z\ge0$ and legal predecessor set $P$, the mex identity fails exactly when
+\begin{equation}\label{notmex}
+ z\in P\quad\text{or}\quad (\exists w\in\mathbb Z,\ 0\le w<z,\ w\notin P).
+\end{equation}
+The candidate has values in $\{0,1,2,3\}$. The file expands~\eqref{notmex} using the finitely many smaller possible values, and asks for any violating integer tuple. The result is UNSAT. Thus, conditional on the faithful translation just described and solver correctness, every local mex equation holds. Strong induction identifies the word with the unique SG sequence. This is a solver-based proof certificate, not a proof-assistant derivation.
+
+A second, exact-rational certificate, \texttt{verify\_symbolic\_all\_a\_v03.py}, is provided separately. In a nontail block put $r=k-i\ge1$ and $v=i\ge0$, so $a=2(r+v)+1$. The nine consecutive constant/parity intervals in~\eqref{h} have affine endpoints. The script verifies the first and last endpoints, adjacency, and nonnegative lengths as affine identities; it also checks the corresponding previous block. For a fixed parity, feasibility of an intersection of target and predecessor intervals reduces to affine inequalities in $(r,v)$. The script tests the stronger real feasibility problem by exact rational arithmetic. The regime lower bounds make the feasible polyhedron pointed; when nonempty it has a vertex at the intersection of two nonparallel boundary lines. All such intersections are examined. The initial, interior, and first-tail regimes have respectively 12, 27, and 16 feasible local combinations, all with the correct mex. Later tail blocks are immediate since all moves are odd. The coverage mutation test rejects a gap caused by shortening the 1-run. This implementation and its reduction remain subject to the stated verification limitations.
+
+Finally, inspect the 0-run and 1-run of each block: their wrong-parity binary positions are precisely $U(i,q)$ and $V(i,q)$. Other positions have value 2, 3, or their own parity. This proves~\eqref{binary}.
+\end{proof}
+Ho's Theorem~5 and Table~8~\cite{Ho} already give the three-move arrangement for odd $a\ge5$. The base word is not claimed as a new discovery. Here it is made explicit and certified, including $a=3$.
+
+\section{Proof for the boundary band}
+For this section let $L+1\le c\le L+3a$ be odd and put $t_*=c-L$. Thus $1\le t_*\le3a$ is odd. We distinguish the target parity $\p(c+j)=1-\p(j)$ from the ordinary small-predecessor value $\p(j)$, since all three small moves and $c$ are odd.
+
+\subsection{Lemma A: the exact five-site terminal window}
+\begin{lemma}[A]\label{A}
+For every integer $x\ge-3a+1$, $h(L+x)=\p(x)$ except for
+\begin{equation}\label{five}
+\begin{array}{c|c}
+ x&h(L+x)\\\hline
+ -2a-1,-2a&2\\
+ -a-1,-a&3\\
+ -1&2
+\end{array}
+\end{equation}
+The first $3a$ values satisfy $h(j)=0$ for $0\le j<a$, $h(j)=1$ for $a\le j<2a$, $h(2a)=0$, and $h(j)=2$ for $2a+1\le j<3a$.
+\end{lemma}
+\begin{proof}
+For $x\ge0$ use the evenness of $L$ and the base tail. Otherwise the position lies in the last block $i=k-1$, whose run parameter is $u=3$ and whose coordinate is $d+x$. Its range is $a+3\le d+x\le d-1$, excluding the 0-run $[0,2]$ and 1-run $[a,a+2]$. The only remaining nonparity positions in~\eqref{h} are $2a+1,2a+2$ (value 2), $3a+1,3a+2$ (value 3), and $d-1$ (value 2). Subtracting $d$ gives exactly~\eqref{five}. All five are distinct and in the window for $a\ge3$. A pre-$c$ small predecessor of $c+j$ has index at least $L+1-3a$, so this window suffices. The first-$3a$ statement follows from the first block with $u=a$. Its portions of $\E_2$ and $\E_3$ are $\{1,3,\ldots,a-2\}$ and $\{a+1,a+3,\ldots,2a-2\}$. This includes $a=3$.
+\end{proof}
+
+\subsection{Lemma B: seed and partner for the first \texorpdfstring{$3a$}{3a} offsets}
+Put $X=t_*+j$. If $j<s$, a small predecessor is in the base prefix with index $L+X-s$. Lemma~\ref{A} gives the following potential positive-$X$ exceptions; the condition $j<s$ must still hold.
+\begin{equation}\label{seedexceptions}
+\begin{array}{c|l|l}
+ s&X&\text{corresponding values}\\\hline
+ a&a-1&2\\
+ 2a+1&1,a,a+1,2a&2,3,3,2\\
+ 3a&a-1,a,2a-1,2a,3a-1&2,2,3,3,2
+\end{array}
+\end{equation}
+We verify $0\le j<3a$ by induction on $j$; a predecessor already past $c$ is an earlier verified value.
+
+\paragraph{Odd $j<a$, namely the first-block $\E_2$.}
+The long predecessor is $h(j)=0$, and all small predecessors are in the base. Since $X$ is even, the altered mex occurs only at $X=a-1,2a,3a-1$. At $a-1$ the small values are $2,1,2$, giving mex 3; at $2a$ they contain $1,2,3$, giving mex 4; at $3a-1$ one is 2 and the others are 1, giving mex 3. At every other even $X$, no small predecessor is 2, and an occasional 3 leaves mex 2. At most one of these seed conditions lies in $1\le j\le a-2$. Solving for $j=2r-1$ gives
+\begin{equation}\label{tseed}
+\begin{array}{c|c|c}
+ t_*\text{ (odd)}&j&\sigma\\\hline
+ 2a+1\le t_*\le3a-2&3a-1-t_*&3\\
+ a+2\le t_*\le2a-1&2a-t_*&4\\
+ 1\le t_*\le a-2&a-1-t_*&3
+\end{array}
+\end{equation}
+The remaining endpoints $t_*=a,3a$ have no seed. With $m=(3a-t_*)/2$, these are exactly~\eqref{phases}, including $r=0$ at $m=2k+1,0$.
+
+\paragraph{Even $j\in\E_3$ in the first block.}
+Here $a+1\le j\le2a-2$, the long predecessor is $h(j)=1$, and move $a$ reaches its earlier $\E_2$ partner $j-a$. Move $2a+1$ gives ordinary 0, since $X$ is odd and $X\ge a+2$. Move $3a$ also gives 0, except possibly value 3 when $X=2a-1$. In this special case $t_*+(j-a)=a-1$, exactly a low-band changed seed. If the partner value is 2, the other small values are 0 and 0 and mex is 3. If the partner is 3 or 4, the other small values are 0 or 3 and mex is 2. Thus precisely the seed's partner flips from 3 to 2.
+
+\paragraph{Odd $j<3a$ outside $\E_2$.}
+Such $j\ge a$ has $h(j)\in\{1,2\}$. All small predecessor values are 1 or in $\{2,3,4\}$, using~\eqref{seedexceptions} and the earlier verified post-$c$ values. Zero is absent, and mex is the unmodified value 0.
+
+\paragraph{Even $j<3a$ outside $\E_3$.}
+The long predecessor is not 1, and no small predecessor is 1. At least one is 0: when $j<a$, move $a$ reaches an ordinary base 0; when $2a\le j<3a$, it reaches the earlier odd offset $j-a\in[a,2a)$ outside both exception sets, whose value is 0. The mex is the unmodified value 1. These four cases exhaust the first $3a$ offsets and prove Lemma B.
+
+\subsection{Lemma C: all exceptional edges and unique propagation}
+Within either fixed-block exception set, the diameter is at most $2(k-1)=a-3$. Between two different blocks, a positive separation in the same set is at least
+\begin{equation}\label{sep}
+ d-2(k-1)=3a+5.
+\end{equation}
+The positive pairwise differences of the small moves are $a-1,a+1,2a$, strictly between these bounds. Therefore at most one small predecessor can be exceptional. Parity forces all potential exceptional sources into $\E_3$ at odd target offset $j$, and into $\E_2$ at even target offset $j$.
+
+For completeness we classify all directed edges of lengths $a,2a+1,3a$ between the two exception sets. An edge points from an earlier source offset to its later target.
+\begin{enumerate}[label=\textnormal{(\roman*)}]
+\item For target $V(i,q)$ and same-block source $U(i,q')$, the difference is $a+2(q-q')\in[3,2a-3]$. It equals a small move only when it is $a$, with $q=q'$. An earlier source block has largest relevant index at most $(i-1)d+a-2i$, so its distance to the target is at least $d+2i+1>3a$. A later source block starts after the largest current-block $V$. Hence the only edge into $V(i,q)$ is $U(i,q)\longrightarrow V(i,q)$, of length $a$.
+\item For target $U(i,q)$, same-block $V$ points are later. In the adjacent previous block,
+\[
+ U(i,q)-V(i-1,q')=3a+2+2(q-q')\ge2a+3+2i\ge2a+5.
+\]
+This excludes $a$ and $2a+1$, and gives length $3a$ exactly when $q'=q+1$. That coordinate is admissible since $q\le k-i-1$. A source at least two blocks earlier is at distance at least $6a+3+2i>3a$; later blocks cannot be predecessors. Thus for $i\ge1$ the only such edge is $V(i-1,q+1)\longrightarrow U(i,q)$, of length $3a$; block 0 has none.
+\end{enumerate}
+No other exceptional edge is possible. For $j\ge3a$, all small predecessors are past $c$, and at least two have ordinary value $\p(j)$. The long predecessor at index $j$ satisfies the binary classification~\eqref{binary}. For $j<c$ this is the base lemma. For $j\ge c>L$, $j$ is outside both $\E$ sets; its earlier candidate value has its own parity or is nonbinary, so no wrong-binary value is introduced. This uses strong induction on the actual heap index.
+
+At odd $j\notin\E_2$ zero is absent from all predecessors, so mex is 0. At even $j\notin\E_3$, 1 is absent and two small predecessors give 0, so mex is 1. At $j\in\E_2$, the long predecessor gives 0 and two small predecessors give 1. The mex changes from 2 to 3 precisely when the unique incoming $\E_3$ source has flipped to 2. At $j\in\E_3$, the long predecessor is 1, two small predecessors give 0, and the paired $\E_2$ source gives 2 (mex 3) or a changed 3/4 (mex 2).
+
+Lemma B starts at $U(0,r-1)$ when $r>0$. The edge classification forces exactly
+\[
+ U(0,r-1)\to V(0,r-1)\to U(1,r-2)\to V(1,r-2)\to\cdots\to U(r-1,0)\to V(r-1,0).
+\]
+The next coordinate would require $q=-1$, so the chain terminates. There is no branching or other seed. The first $U$ is $\sigma$, later $U$ values are 3, and all changed $V$ values are 2. All other offsets retain~\eqref{W}. Strong induction proves~\eqref{correction} throughout the boundary band, including $k=1$.
+
+\section{Large fourth moves and minimality}
+For odd $c\ge L+3a$, each small predecessor before $c$ is already in the base parity tail. By~\eqref{sep}, at least two of the three small predecessors have ordinary value $\p(j)$ at target $c+j$. The long predecessor has the same binary classification as above. If $j$ is odd, small predecessors are 1 or exceptional 3, never 2; hence the mex is 2 exactly for $j\in\E_2$ and otherwise 0. If $j$ is even, small predecessors are 0 or exceptional 2, never 3. Outside $\E_3$ mex is 1; in $\E_3$, move $a$ reaches its paired $\E_2$ point and supplies 2, so mex is 3. This closes strong induction and proves the unmodified word for the entire large-$c$ range.
+
+\paragraph{Lemma D: sharp onset and least period.}
+In every case the last exceptional offset is
+\begin{equation}\label{last}
+ j_{\max}=(k-1)d+a+1=L-3a-1\in\E_3.
+\end{equation}
+Its value is 3 or, if changed, 2. Its actual index $c+j_{\max}$ is odd and has ordinary value 1, so it remains a nonparity, nonbinary point. Every later value is its own parity. Every earlier base-prefix position lies below this final point. Thus periodicity begins at $c+j_{\max}+1=c+L-3a$. A nonconstant alternating infinite tail has least period 2. More strongly, any proposed period $p$ starting at or before the final nonbinary point would repeat that point at arbitrarily large indices, where only 0 and 1 occur, a contradiction. This proves~\eqref{minimal} for the earliest onset of any period, and completes Theorem~\ref{main}.
+
+\section{SMT scope, correspondence, and reproduction}
+The second independent file, \texttt{FOURMOVE\_UNIVERSAL\_MEX.smt2}, verifies the whole four-move recurrence, complementing the algebra above. Here is the correspondence required to interpret its UNSAT result.
+Every odd $c\ge L+1$ has a unique decomposition
+\[
+ c=Kd+T_0,\qquad K=k+b,\quad b\ge0,\quad T_0=2\tau+1,\quad \tau\ge0,\quad 1\le T_0\le d-1.
+\]
+The file names $b$ as \texttt{m}; this is a block excess, distinct from the boundary-band $m$ in~\eqref{phases}. A post-$c$ offset is $j=id+t$, $i\ge0$, $0\le t<d$. Its function \texttt{G} represents the value at $c+j$, using exactly~\eqref{Esets} and~\eqref{correction}. Corrections are enabled only when $b=0$ and $T_0$ lies in one of~\eqref{tseed}; all larger $c$ have $r=0$. The middle seed is explicitly 4. Chain membership is $i<r$ with $t=2(r-i)-1$ or $t=a+2(r-i)-1$.
+
+For a small move $s<d$, the file's \texttt{ps} uses the current or immediately previous post-$c$ block. In block 0 with $t<s$, it uses the base predecessor $Kd+(T_0+t-s)$. This coordinate lies within the current or preceding base block, since $-d<T_0+t-s<d$. Its \texttt{Hc} implements that split. Its \texttt{lv} is the long predecessor at index $j$: base value if $j<c$, and otherwise the post-$c$ candidate at offset $j-c$, using one borrow if $t<T_0$. All four moves are legal at $c+j$, since $c\ge L+1>3a$. Thus these functions list exactly the four predecessor values, with no omitted boundary case.
+
+The asserted formula is~\eqref{notmex}, expanded for candidate values in $\{0,1,2,3,4\}$. All parameters are arbitrary integers satisfying the displayed domains; there is no numerical upper bound on $a$, $c$, or $j$. UNSAT therefore rules out a recurrence counterexample in this encoding. Together with the base recurrence, strong induction yields the candidate infinite word, conditional on encoding faithfulness and solver soundness. This is neither independent second-solver verification nor a human-reviewed or Lean-formalized proof.
+
+\begin{center}\small
+\begin{tabular}{p{.50\linewidth}p{.41\linewidth}}
+\toprule
+Check&Result and scope\\\midrule
+Base and four-move SMT controls&UNSAT, UNSAT\\
+Mutations: final base $2\to1$; middle seed $4\to3$; chain $\E_3$ $2\to3$&SAT for each of the three\\
+Separate direct-mex Python&790 pairs; 2,677,220 positions; no mismatches\\
+Boundary-band Python&1,455 pairs; 16,739,670 positions; no mismatches\\
+Boundary-band C++17&2,588 pairs; 101,872,020 positions; no mismatches\\
+Structural A/C regression&102 odd $a$; finite corroboration only\\
+Exact affine base certificate&12/27/16 local cases, zero bad; coverage and mutation checks PASS\\\bottomrule
+\end{tabular}
+\end{center}
+The supplemental Python test covers odd $a=3,5,\ldots,41$ and every odd $c\in[L+1,L+3a+13]$, comparing the explicit formula at every generated position. Boundary-band Python covers odd $a\le61$ and every odd $c\in[L+1,L+3a]$, using a directly generated three-move prefix. C++ covers that band through odd $a\le81$, then 48 selected large pairs at $a=101,151,201,301,501,801$; it generates the full mex prefix and compares the closed extension from $n=c$ onward. Its position total counts generated values. The ranges overlap and their totals are not distinct tests. These finite matches supplement the universal argument; they do not prove it or determine novelty.
+
+During publication preparation all listed supplied sources were run unchanged in a clean Linux environment, Python 3.12.14, with C++17 compiled using \texttt{-O2 -Wall -Wextra -Werror}. SMT used the system Z3 4.13.3 shared-library route. The author's Windows PowerShell 5.1 evidence for the unchanged v0.11 code reports the same 2,588-pair C++ total and the Python/structural checks. The separate author-reported Windows SMT run used \texttt{z3-solver 5.4.1.0}, displaying Z3 5.4.1, and reports both UNSAT controls, all three SAT mutations, the 790-pair direct-mex PASS, and overall PASS. That report is distinct from the Linux 4.13.3 execution. The Windows runs were author-run, not independently witnessed; no new Windows execution by the publication editor is claimed.
+
+The reproduction ZIP contains byte-identical selected computational sources, SMT files, clean expected outputs, provenance hashes, and relative-path checksums. Historical candidate/HOLD labels within frozen source comments or console messages are retained as history; they do not describe this public v1.0's publication authorization. Private integrated archives, raw Windows transcripts, and workstation identifiers are excluded.
+
+\section{Prior art, relationship to No.63/64, and limitations}
+Ho~\cite{Ho}, Theorem 5 and Table 8 in arXiv v3 (24 December 2014), treats the three-move base for odd $a\ge5$, with preperiod $L$ and period 2. Its table and argument were directly checked for this publication. The base arrangement and its periodicity are prior art; our computational certificates do not establish priority for them.
+
+Zhang~\cite{Zhang}, Remark 7 in the author-posted revision dated 30 July 2025, explicitly studies the same four-move family for odd $c>3a$. It reports bounded observations at $3\le a\le25,c<500$, including period 2 outside specified exceptional branches. That observation is not claimed new here. The inspected remark does not state our complete three-phase word or the uniform sharp preperiod formula. This comparison alone does not establish worldwide novelty.
+
+The author's No.63~\cite{Y63} proves the full odd-$c>9$ classification at $a=3$: $(\ell,p)=(0,16)$ at $c=13$, and $(c+5,2)$ otherwise. Here $L=14$, so Theorem~\ref{main} includes its portion $c\ge15$, with the same sharp preperiod. It does not replace its smaller-$c$ classification. No.64~\cite{Y64} treats every odd $c>15$ at $a=5$, using a uniform word for $c\ge59$ and finite certificates below. Here $L=44$, so our theorem applies from $c=45$, agrees with the seven finite cases $45,47,\ldots,57$, and includes its uniform $c\ge59$ theorem. No.64's wider all-odd-$a$ quadratic expression was explicitly a computational conjecture. The prospective extension here is the all-odd-$a$ theorem on $c\ge L+1$, with its full boundary-band corrections, rather than treating the fixed slices as unrelated new results.
+
+Flammenkamp's author page~\cite{Flammenkamp} distinguishes the dissertation from an enlarged 1997 book, ISBN 3-932136-10-1. The expanded book was not obtained or checked in full for this publication. Earlier No.63/64 comparisons of dissertation passages do not certify non-overlap with that expanded edition. \textbf{REFERENCES PARTIAL and NOVELTY INCONCLUSIVE are retained.} No historical priority claim is made. No fatal direct containment of the four-move theorem was identified in the sources actually compared; this is a bounded finding, not a proof of originality.
+
+Our assertions are restricted to one-pile normal play, odd $a\ge3$, and odd $c\ge L+1$. No claim is made for even parameters, all smaller fourth moves, arbitrary four-element sets, or an optimal uniform cutoff in $c$. We do not claim that the uncorrected word extends below $c_0$, that all boundary corrections are 2/3 swaps, that SMT checks constitute human peer review, or that references are fully verified.
+
+\begingroup\small
+\begin{thebibliography}{9}
+\bibitem{Ho} N. B. Ho, \emph{On the expansion of three-element subtraction sets}, Theoretical Computer Science 582 (2015), 35--47. \href{https://doi.org/10.1016/j.tcs.2015.03.025}{doi:10.1016/j.tcs.2015.03.025}. Author preprint arXiv:1202.2986v3, Theorem 5 and Table 8: \url{https://arxiv.org/abs/1202.2986}.
+\bibitem{Zhang} S. Zhang, \emph{On the linearity of the periods of subtraction games}, Theoretical Computer Science 985 (2024), 114350. \href{https://doi.org/10.1016/j.tcs.2023.114350}{doi:10.1016/j.tcs.2023.114350}. Author-posted revision 30 July 2025, Remark 7, available from \url{https://zhangshenxing.github.io/}.
+\bibitem{Y63} R. Yonezu, \emph{A Sharp Preperiod and Explicit Nim-Words for the Four-Move Subtraction Sets $\{3,7,9,c\}$}, research No.63, preprint v1.0 (11 November 2026). \url{https://github.com/yonezaemon1-hub/no63-four-move-subtraction-sharp-preperiod}.
+\bibitem{Y64} R. Yonezu, \emph{Complete Nim-Words and Sharp Preperiods for the Four-Move Subtraction Family $\{5,11,15,c\}$}, research No.64, preprint v1.0 (11 November 2026). \href{https://doi.org/10.5281/zenodo.24134832}{doi:10.5281/zenodo.24134832}.
+\bibitem{Flammenkamp} A. Flammenkamp, \emph{Lange Perioden in Subtraktions-Spielen}, dissertation (1997); separately enlarged book (1997), ISBN 3-932136-10-1. Edition distinction checked on the author's page, \url{https://wwwhomes.uni-bielefeld.de/achim/welcome.html}; expanded book not verified in full.
+\end{thebibliography}
+\endgroup
+\end{document}
