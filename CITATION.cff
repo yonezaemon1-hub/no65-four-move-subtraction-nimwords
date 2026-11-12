@@ -15,3 +15,6 @@ keywords:
   - preperiod
   - SMT verification
 abstract: "Complete nim-words for odd a>=3 and odd c>=(a-1)(2a+1)+1, including three-phase boundary corrections and least preperiod c+2a^2-4a-1, least eventual period 2. Independent AI-assisted and SMT verification within the documented scope; author-run Windows reproduction; not peer-reviewed; REFERENCES PARTIAL; NOVELTY INCONCLUSIVE."
+doi: "10.5281/zenodo.24162911"
+url: "https://zenodo.org/records/24162911"
+repository-code: "https://github.com/yonezaemon1-hub/no65-four-move-subtraction-nimwords"

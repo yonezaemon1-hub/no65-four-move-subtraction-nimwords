@@ -93,3 +93,24 @@ All 19 embedded v0.11 entries matched the original embedded ZIP byte for byte.
 All supplied manifests passed. The public kit's ten selected computational
 files are byte-identical to their respective frozen sources; mathematical
 claims in this editorial TeX follow the v0.9 theorem with v0.11 A/C details.
+
+
+## Publication links
+
+- GitHub repository: https://github.com/yonezaemon1-hub/no65-four-move-subtraction-nimwords
+- Release v1.0: https://github.com/yonezaemon1-hub/no65-four-move-subtraction-nimwords/releases/tag/v1.0
+- Release commit: f5a31a85be8a5b8662a79a4cd1e4b5dcf68e4356
+- Zenodo Preprint record: https://zenodo.org/records/24162911
+- Version DOI: https://doi.org/10.5281/zenodo.24162911
+- Concept DOI: https://doi.org/10.5281/zenodo.24162910
+
+These publication links were added to main after the deposit. The eight
+Release/Zenodo v1.0 assets retain their original hashes; PDF, TeX and the
+reproducibility ZIP are unchanged. The deposited PDF does not print a DOI;
+its title, author, date and version agree with the DOI record.
+
+| Core asset | SHA256 |
+| --- | --- |
+| No65_v1.0_PREPRINT.pdf | `d13f4930767f8d906a0e895015e9ab931e426655c199edf3c5e22438ca1020ad` |
+| No65_v1.0_SOURCE.tex | `147b7642ba39c9877eecdcfec687e98eb37d3dd00a17f0ac0671d42d91f721ef` |
+| No65_v1.0_REPRODUCIBILITY.zip | `9254e0062ecbec474477a4c09823123939fe6e2e009fe2042a5e278dfa9c3f14` |
