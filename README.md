@@ -3,6 +3,8 @@
 **Exact Nim-Words and Sharp Preperiods in an Infinite Two-Parameter Four-Move Subtraction Family**
 
 Ryutaro Yonezu - Independent Researcher. 12 November 2026.
+
+Research correspondence: [yonezaemon1+research@gmail.com](mailto:yonezaemon1+research@gmail.com)
 Copyright (c) 2026 Ryutaro Yonezu. **All rights reserved.**
 
 For every odd a>=3 and odd c>=L+1, where L=(a-1)(2a+1), this preprint gives
